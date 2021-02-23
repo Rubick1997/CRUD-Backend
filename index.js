@@ -14,16 +14,17 @@ mongoose.connect(
 		useNewUrlParser: true,
 	}
 );
-
 app.post("/insert", async (req, res) => {
 	const firstName = req.body.firstName;
 	const lastName = req.body.lastName;
 	const email = req.body.email;
+	const imageUri = req.body.imageUri
 
 	const users = new UsersModel({
 		userName: firstName,
 		userLastName: lastName,
 		userEmail: email,
+		imageUri:imageUri
 	});
 	try {
 		await users.save();
@@ -59,6 +60,8 @@ app.put("/update", async (req, res) => {
 
 app.delete("/delete/:id", async (req, res) => {
 	const id = req.params.id;
+	await UsersModel.findByIdAndRemove(id).exec();
+	res.send("deleted")
 });
 app.listen(3001, () => {
 	console.log("Server running on port 3001...");

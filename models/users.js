@@ -6,6 +6,10 @@ const validateEmail = function (email) {
 };
 
 const UsersSchema = new mongoose.Schema({
+	imageUri:{
+		type:String,
+		required:true
+	},
 	userName: {
 		type: String,
 		required: true,

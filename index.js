@@ -38,10 +38,28 @@ app.get("/read", async (req, res) => {
 		if (err) {
 			res.send(err);
 		}
-		res.send(result)
+		res.send(result);
 	});
 });
 
+app.put("/update", async (req, res) => {
+	const newEmail = req.body.newUserEmail;
+	const id = req.body.id;
+
+	try {
+		await UsersModel.findById(id, (err, updatedItem) => {
+			updatedItem.userEmail = newEmail;
+			updatedItem.save();
+			res.send("update");
+		});
+	} catch (err) {
+		console.log(err);
+	}
+});
+
+app.delete("/delete/:id", async (req, res) => {
+	const id = req.params.id;
+});
 app.listen(3001, () => {
 	console.log("Server running on port 3001...");
 });
